@@ -76,7 +76,13 @@ function drop(dragEvent) {
 
 function fillImages() {
     var imageIDs = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-    imageIDs.sort(() => Math.random() - 0.5);
+    while (true) { 
+        if (validatePuzzle(imageIDs.sort(() => Math.random() - 0.5)) === false) {
+            continue;
+        } else {
+            break;
+        }
+    }
     var cells = document.getElementsByClassName('cell');
     for (i in imageIDs) {
         var img = document.createElement('img');
