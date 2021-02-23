@@ -16,7 +16,7 @@ function checkForWin() {
         }
     }
     if (c === 15) {
-        alert("You win!");
+        console.log("You win!");
     }
 }
 
