@@ -1,0 +1,16 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.cell {
+    border: solid 1px black;
+    width: 110px;
+    height: 110px;
+    background-color: rgb(16, 89, 153);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
