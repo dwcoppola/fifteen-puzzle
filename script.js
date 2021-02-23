@@ -5,6 +5,21 @@ const adjacentToBlank = {
     '13': [9,14], '14': [10,13,15], '15': [11,14,16], '16': [12,15]
 }
 
+function checkForWin() {
+    c = 0
+    var cells = document.getElementsByClassName('cell');
+    for (v=0; v<15; v++) {
+        if (cells[v].firstElementChild === null) {
+            continue
+        } else if (cells[v].firstElementChild.name === cells[v].id) {
+            c++;
+        }
+    }
+    if (c === 15) {
+        alert("You win!");
+    }
+}
+
 function validatePuzzle(list) {
     var copyOfList = list;
     var inversionCount = 0;
@@ -57,6 +72,7 @@ function changeDropInformation() {
     }
     lockImages();
     makeSquaresDraggable();
+    checkForWin();
 }
 
 function allowDrop(dragEvent) {
@@ -89,6 +105,7 @@ function fillImages() {
         img.setAttribute('src', (`images/${imageIDs[i]}.jpg`));
         img.setAttribute('id', `image-${Number(i) + 1}`);
         img.setAttribute('class', 'image');
+        img.setAttribute('name', `${Number(imageIDs[i])}`);
         cells[i].appendChild(img);
         if (cells[i].id === '12' || cells[i].id === '15') {
             img.setAttribute('draggable', 'true');
