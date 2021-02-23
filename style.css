@@ -1,5 +1,6 @@
 html {
     background-color: rgb(133, 168, 214);
+    user-select: none;
 }
 body {
     font-family: arial;
@@ -21,7 +22,4 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-img {
-    user-select: none;
 }
