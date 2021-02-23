@@ -1,12 +1,48 @@
-const blankCheck = { 
+const adjacentToBlank = { 
     '1': [2, 5], '2': [1,3,6], '3': [2,4,7], '4': [3,8],
     '5': [1,6,9], '6': [2,5,7,10], '7': [3,6,8,11], '8': [4,7,12],
     '9': [5,10,13], '10': [6,9,11,14], '11': [7,10,12,15], '12': [8,11,16],
     '13': [9,14], '14': [10,13,15], '15': [11,14,16], '16': [12,15]
 }
 
-// for the 2, 3, or 4 adjacent container images, set draggable to true
-//     all other images should have draggable of false
+function validatePuzzle(list) {
+    var copyOfList = list;
+    var inversionCount = 0;
+    for (i=0; i<14; i++) {
+        for (j=i+1; j<15; j++) {
+            if (copyOfList[i] > copyOfList[j]) {
+                inversionCount++;
+            }
+        }
+    }
+    if (inversionCount % 2 === 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function lockImages() {
+    var images = document.getElementsByClassName('image');
+    for (i=0; i<images.length; i++) {
+        images[i].setAttribute('draggable', 'false');
+        images[i].removeAttribute('ondragstart');
+    }
+}   
+
+function makeSquaresDraggable() {
+    var cells = document.getElementsByClassName('cell');
+    for (v in cells) {
+        if (cells[v].childElementCount === 0) {
+            var list = adjacentToBlank[(Number(v) + 1).toString()];
+        }
+        for (i in list) {
+            var image = document.getElementById(list[i]).firstChild;
+            image.setAttribute('draggable', 'true');
+            image.setAttribute('ondragstart', 'drag(event)');
+        }
+    }
+}
 
 function changeDropInformation() {
     var cells = document.getElementsByClassName('cell');
@@ -16,9 +52,11 @@ function changeDropInformation() {
             cells[i].setAttribute('ondragover', 'allowDrop(event)');
         } else if (cells[i].childElementCount === 1) {
             cells[i].removeAttribute('ondrop');
-            cells[i].removeAttribute('ondragover');           
+            cells[i].removeAttribute('ondragover');        
         }
     }
+    lockImages();
+    makeSquaresDraggable();
 }
 
 function allowDrop(dragEvent) {
@@ -44,13 +82,13 @@ function fillImages() {
         var img = document.createElement('img');
         img.setAttribute('src', (`images/${imageIDs[i]}.jpg`));
         img.setAttribute('id', `image-${Number(i) + 1}`);
+        img.setAttribute('class', 'image');
         cells[i].appendChild(img);
         if (cells[i].id === '12' || cells[i].id === '15') {
             img.setAttribute('draggable', 'true');
             img.setAttribute('ondragstart', 'drag(event)');
         } else {
             img.setAttribute('draggable', 'false');
-            img.setAttribute('ondragstart', 'drag(event)');            
         }
     }
     cells[15].setAttribute('ondrop', 'drop(event)'); 
