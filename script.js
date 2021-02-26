@@ -16,7 +16,18 @@ function checkForWin() {
         }
     }
     if (c === 15) {
-        console.log("You win!");
+        var img = document.createElement('img');
+        var win = document.getElementById('16');
+        win.appendChild(img);
+        img.setAttribute('src', 'images/16.jpg')
+        win.removeAttribute('ondragover');
+        win.removeAttribute('ondrop');
+        lock1 = document.getElementById('15');
+        lock1.firstElementChild.removeAttribute('draggable');
+        lock1.firstElementChild.removeAttribute('ondragstart');
+        lock2 = document.getElementById('12');
+        lock2.firstElementChild.removeAttribute('draggable');
+        lock2.firstElementChild.removeAttribute('ondragstart');
     }
 }
 
